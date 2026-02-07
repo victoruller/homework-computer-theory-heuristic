@@ -70,6 +70,12 @@ impl Machine {
   }
 
   fn pop_tasks(&mut self) -> Option<i32> {
-    self.tasks.pop()
+    match self.tasks.pop() {
+      None => None,
+      Some(i) => {
+        self.makespan -= i;
+        Some(i)
+      }
+    }
   }
 }
