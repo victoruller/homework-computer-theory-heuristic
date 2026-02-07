@@ -1,6 +1,12 @@
 use rand::Rng;
 use anyhow::{Result, anyhow};
 
+
+pub mod first_improvement;
+pub mod best_improvement;
+pub mod simulated_annealing;
+
+
 #[derive(Debug)]
 pub struct Alocator {
   machines: Vec::<Machine>,
