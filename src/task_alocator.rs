@@ -43,6 +43,22 @@ impl Alocator {
 
     Ok(Self {machines: f_machines, makespan: f_makespan})
   }
+  
+  pub fn new_randonly_distributed(m: i32, r: f64) -> Result<Self> {
+    let mut f_machines = Vec::<Machine>::new();
+    let n = (m as f64).powf(r).floor() as i32;
+    for _ in 0..m {
+      f_machines.push(Machine::new());
+    }
+
+    // preenche máquinas aleatoriamente
+    for _ in 0..n {
+      f_machines[rand::rng().random_range(0..m) as usize].add_randon_task();
+    }
+    let mut alocator = Self {machines: f_machines, makespan: 0};
+    alocator.makespan = alocator.calculate_makespan();
+    Ok(alocator)
+  }
 
   pub fn get_makespan(&self) -> i32 {
     self.makespan
