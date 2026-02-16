@@ -15,22 +15,19 @@ fn main() -> anyhow::Result<()> {
     println!("heuristica,n,m,replicacao,tempo,iteracoes,valor,parametro");
     for m in ms {
         for r in rs {
-            for a in alphas {
-                for ct in 1..=10 {
-                    // let iters = replicate_nth_search_by_fi(10, m, r, a)?;
-                    let mut all = Allocator::new(false, m, r, a, TEMPURA_ITERS)?;
+            for ct in 1..=10 {
+                let mut all = Allocator::new(false, m, r, 0f64, TEMPURA_ITERS)?;
 
-                    let time = SystemTime::now();
-                    let iters = all.search_by_first_improve()?;
-                    let elap = time.elapsed()?;
+                let time = SystemTime::now();
+                let iters = all.search_by_first_improve()?;
+                let elap = time.elapsed()?;
 
-                    println!(
-                        "monotonaprimeiramelhora,{},{m},{ct},{},{iters},{},{a}",
-                        m.pow(r as u32),
-                        elap.as_micros() as f64 * 0.000001f64,
-                        all.get_makespan()
-                    );
-                }
+                println!(
+                    "monotonaprimeiramelhora,{},{m},{ct},{},{iters},{},N/A",
+                    m.pow(r as u32),
+                    elap.as_micros() as f64 * 0.000001f64,
+                    all.get_makespan()
+                );
             }
         }
     }
@@ -39,7 +36,6 @@ fn main() -> anyhow::Result<()> {
         for r in rs {
             for a in alphas {
                 for ct in 1..=10 {
-                    // let iters = replicate_nth_search_by_fi(10, m, r, a)?;
                     let mut all = Allocator::new(false, m, r, a, TEMPURA_ITERS)?;
 
                     let time = SystemTime::now();
@@ -59,22 +55,19 @@ fn main() -> anyhow::Result<()> {
 
     for m in ms {
         for r in rs {
-            for a in alphas {
-                for ct in 1..=10 {
-                    // let iters = replicate_nth_search_by_fi(10, m, r, a)?;
-                    let mut all = Allocator::new(false, m, r, a, TEMPURA_ITERS)?;
+            for ct in 1..=10 {
+                let mut all = Allocator::new(false, m, r, 0f64, TEMPURA_ITERS)?;
 
-                    let time = SystemTime::now();
-                    let iters = all.search_by_best_improve();
-                    let elap = time.elapsed()?;
+                let time = SystemTime::now();
+                let iters = all.search_by_best_improve();
+                let elap = time.elapsed()?;
 
-                    println!(
-                        "monotonamelhormelhora,{},{m},{ct},{},{iters},{},{a}",
-                        m.pow(r as u32),
-                        elap.as_micros() as f64 * 0.000001f64,
-                        all.get_makespan()
-                    );
-                }
+                println!(
+                    "monotonamelhormelhora,{},{m},{ct},{},{iters},{},N/A",
+                    m.pow(r as u32),
+                    elap.as_micros() as f64 * 0.000001f64,
+                    all.get_makespan()
+                );
             }
         }
     }
