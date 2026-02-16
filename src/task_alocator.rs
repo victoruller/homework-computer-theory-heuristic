@@ -296,45 +296,48 @@ impl Allocator {
     }
 
     fn get_lower_makespan_machine_index(&self) -> usize {
-      let mut lower_makespan         = i32::MAX;
-      let mut lower_makespan_machine = 0;
-      for i in 0..self.machines.len() {
-        let current_machine_makespan = self.machines[i].get_makespan();
-        if current_machine_makespan < lower_makespan {
-          lower_makespan_machine = i;
-          lower_makespan         = current_machine_makespan;
+        let mut lower_makespan = i32::MAX;
+        let mut lower_makespan_machine = 0;
+        for i in 0..self.machines.len() {
+            let current_machine_makespan = self.machines[i].get_makespan();
+            if current_machine_makespan < lower_makespan {
+                lower_makespan_machine = i;
+                lower_makespan = current_machine_makespan;
+            }
         }
-      }
-      return lower_makespan_machine;
+        return lower_makespan_machine;
     }
 
     pub fn search_by_best_improve(&mut self) -> i32 {
         let mut n_melhorias = 0;
 
-        println!("{self}");
+        if self.display {
+            println!("{self}");
+        }
 
         loop {
-          let task = self.machines[0].pop_tasks().unwrap_or(0);
-          let stand_by_machine = self.get_lower_makespan_machine_index();
-          self.machines[stand_by_machine].push_task(task);
-          let new_makespan = self.calculate_makespan();
-          if new_makespan < self.get_makespan() {
-            self.makespan = new_makespan;
-            n_melhorias += 1;
-
-            self.machines[stand_by_machine].pop_tasks();
-            self.print_diff(task, 0, stand_by_machine);
+            let task = self.machines[0].pop_tasks().unwrap_or(0);
+            let stand_by_machine = self.get_lower_makespan_machine_index();
             self.machines[stand_by_machine].push_task(task);
-            
+            let new_makespan = self.calculate_makespan();
+            if new_makespan < self.get_makespan() {
+                self.makespan = new_makespan;
+                n_melhorias += 1;
 
-              println!("\n\npress enter key");
+                if self.display {
+                    self.machines[stand_by_machine].pop_tasks();
+                    self.print_diff(task, 0, stand_by_machine);
+                    self.machines[stand_by_machine].push_task(task);
 
-              let mut _s = String::default();
-              std::io::stdin().read_line(&mut _s);
-            continue;
-          } else {
-            break n_melhorias;
-          }
+                    println!("\n\npress enter key");
+
+                    let mut _s = String::default();
+                    std::io::stdin().read_line(&mut _s).unwrap();
+                }
+                continue;
+            } else {
+                break n_melhorias;
+            }
         }
     }
 
