@@ -24,7 +24,7 @@ fn main() -> anyhow::Result<()> {
 
                 println!(
                     "monotonaprimeiramelhora,{},{m},{ct},{},{iters},{},N/A",
-                    m.pow(r as u32),
+                    (m as f64).powf(r).floor() as i32,
                     elap.as_micros() as f64 * 0.000001f64,
                     all.get_makespan()
                 );
@@ -44,7 +44,7 @@ fn main() -> anyhow::Result<()> {
 
                     println!(
                         "tempurasimulada,{},{m},{ct},{},{iters},{},{a}",
-                        m.pow(r as u32),
+                        (m as f64).powf(r).floor() as i32,
                         elap.as_micros() as f64 * 0.000001f64,
                         all.get_makespan()
                     );
@@ -64,7 +64,7 @@ fn main() -> anyhow::Result<()> {
 
                 println!(
                     "monotonamelhormelhora,{},{m},{ct},{},{iters},{},N/A",
-                    m.pow(r as u32),
+                    (m as f64).powf(r).floor() as i32,
                     elap.as_micros() as f64 * 0.000001f64,
                     all.get_makespan()
                 );
